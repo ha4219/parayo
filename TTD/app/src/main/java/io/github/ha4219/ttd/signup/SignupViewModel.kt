@@ -13,9 +13,9 @@ import java.lang.Exception
 
 class SignupViewModel(app: Application):BaseViewModel(app) {
 
-    val email = MutableLiveData<String>()
-    val name = MutableLiveData<String>()
-    val password = MutableLiveData<String>()
+    val email = MutableLiveData("")
+    val name = MutableLiveData("")
+    val password = MutableLiveData("")
 
     suspend fun signup(){
         val request = SignupRequest(email.value, password.value, name.value)
