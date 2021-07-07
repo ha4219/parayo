@@ -13,6 +13,9 @@ object JWTUtil {
     private val SECRET = "your-secret"
     private val algorithm: Algorithm = Algorithm.HMAC256(SECRET)
 
+    private val refreshSecret = "your-refresh-secret"
+    private val refreshAlgorithm: Algorithm = Algorithm.HMAC256(refreshSecret)
+
     fun createToken(email:String) = JWT.create()
         .withIssuer(ISSUER)
         .withSubject(SUBJECT)
@@ -20,6 +23,14 @@ object JWTUtil {
         .withExpiresAt(Date(Date().time+ EXPIRE_TIME))
         .withClaim(JWTClaims.EMAIL, email)
         .sign(algorithm)
+
+    fun createRefreshToken(email: String) = JWT.create()
+        .withIssuer(ISSUER)
+        .withSubject(SUBJECT)
+        .withIssuedAt(Date())
+        .withExpiresAt(Date(Date().time+ EXPIRE_TIME))
+        .withClaim(JWTClaims.EMAIL, email)
+        .sign(refreshAlgorithm)
 
     object JWTClaims {
         const val EMAIL = "email"
