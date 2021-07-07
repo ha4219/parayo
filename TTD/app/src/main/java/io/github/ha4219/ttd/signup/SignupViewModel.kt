@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import io.github.ha4219.ttd.api.DongApi
 import io.github.ha4219.ttd.api.request.SignupRequest
 import io.github.ha4219.ttd.api.response.ApiResponse
+import io.github.ha4219.ttd.api.response.SigninResponse
+import io.github.ha4219.ttd.common.Prefs
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.withContext
 import net.codephobia.ankomvvm.lifecycle.BaseViewModel
@@ -58,6 +60,19 @@ class SignupViewModel(app: Application):BaseViewModel(app) {
         if(response.success){
             toast("회원 가입이 완료되었습니다. 로그인 후 이용해주세요.")
             finishActivity()
+        }else{
+            toast(response.message ?: "알 수 없는 오류가 발생했습니다.")
+        }
+    }
+
+    private fun onSigninResponse(response: ApiResponse<SigninResponse>) {
+        if(response.success && response.data!= null){
+            Prefs.token = response.data.token
+            Prefs.refreshToken = response.data.refreshToken
+            Prefs.userName = response.data.userName
+            Prefs.userId = response.data.userId
+
+            toast("로그인되었습니다.")
         }else{
             toast(response.message ?: "알 수 없는 오류가 발생했습니다.")
         }
