@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import io.github.ha4219.ttd.api.DongApi
+import io.github.ha4219.ttd.signin.SigninActivity
 import io.github.ha4219.ttd.signup.SignupActivity
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -22,7 +23,7 @@ class IntroActivity : AppCompatActivity() {
 
         GlobalScope.launch {
             delay(1000)
-            startActivity<SignupActivity>()
+            startActivity<SigninActivity>()
             finish()
         }
     }
