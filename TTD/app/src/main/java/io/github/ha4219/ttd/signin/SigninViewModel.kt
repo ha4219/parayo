@@ -7,6 +7,7 @@ import io.github.ha4219.ttd.api.DongApi
 import io.github.ha4219.ttd.api.request.SigninRequest
 import io.github.ha4219.ttd.api.response.ApiResponse
 import io.github.ha4219.ttd.api.response.SigninResponse
+import io.github.ha4219.ttd.product.ProductMainActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import net.codephobia.ankomvvm.lifecycle.BaseViewModel
@@ -54,6 +55,7 @@ class SigninViewModel(app:Application) : BaseViewModel(app) {
     private fun onSigninResponse(response: ApiResponse<SigninResponse>){
         if(response.success){
             toast("로그인되었습니다.")
+            startActivityAndFinish<ProductMainActivity>()
         }else{
             toast(response.message ?: "알 수 없는 오류가 발생했습니다.")
         }

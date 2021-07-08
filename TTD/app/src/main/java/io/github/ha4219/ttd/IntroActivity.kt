@@ -6,6 +6,8 @@ import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import io.github.ha4219.ttd.api.DongApi
+import io.github.ha4219.ttd.common.Prefs
+import io.github.ha4219.ttd.product.ProductMainActivity
 import io.github.ha4219.ttd.signin.SigninActivity
 import io.github.ha4219.ttd.signup.SignupActivity
 import kotlinx.coroutines.GlobalScope
@@ -23,7 +25,12 @@ class IntroActivity : AppCompatActivity() {
 
         GlobalScope.launch {
             delay(1000)
-            startActivity<SigninActivity>()
+            if(Prefs.token.isNullOrEmpty()){
+                startActivity<SigninActivity>()
+            }else{
+                startActivity<ProductMainActivity>()
+            }
+
             finish()
         }
     }
