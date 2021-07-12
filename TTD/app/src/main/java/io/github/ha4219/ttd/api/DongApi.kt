@@ -1,13 +1,15 @@
 package io.github.ha4219.ttd.api
 
 
+import io.github.ha4219.ttd.api.request.ProductRegistrationRequest
 import io.github.ha4219.ttd.api.request.SigninRequest
 import io.github.ha4219.ttd.api.request.SignupRequest
 import io.github.ha4219.ttd.api.response.ApiResponse
+import io.github.ha4219.ttd.api.response.ProductImageUploadResponse
 import io.github.ha4219.ttd.api.response.SigninResponse
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
+import okhttp3.MultipartBody
+import retrofit2.Response
+import retrofit2.http.*
 
 
 interface DongApi{
@@ -16,7 +18,7 @@ interface DongApi{
 
     companion object {
         val instance = ApiGenerator()
-            .generator(DongApi::class.java)
+            .generate(DongApi::class.java)
     }
 
     @POST("/api/v1/users")
@@ -26,4 +28,16 @@ interface DongApi{
     @POST("/api/v1/signin")
     suspend fun signin(@Body signinRequest: SigninRequest)
         :ApiResponse<SigninResponse>
+
+
+    @Multipart
+    @POST("/api/v1/product_images")
+    suspend fun uploadProductImages(
+        @Part images: MultipartBody.Part
+    ):ApiResponse<ProductImageUploadResponse>
+
+    @POST("/api/v1/products")
+    suspend fun registerProduct(
+        @Part request: ProductRegistrationRequest
+    ):ApiResponse<Response<Void>>
 }

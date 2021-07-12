@@ -13,7 +13,9 @@ import io.github.ha4219.ttd.common.Prefs
 import io.github.ha4219.ttd.signin.SigninActivity
 import io.github.ha4219.ttd.view.borderBottom
 import org.jetbrains.anko.*
+import org.jetbrains.anko.design.floatingActionButton
 import org.jetbrains.anko.design.navigationView
+import org.jetbrains.anko.sdk27.coroutines.onClick
 import org.jetbrains.anko.support.v4.drawerLayout
 
 
@@ -29,16 +31,29 @@ class ProductMainUI(
     override fun createView(ui: AnkoContext<ProductMainActivity>) =
         ui.drawerLayout {
             drawerLayout = this
-            verticalLayout {
-                toolBar = toolbar{
-                    title = "Search"
-                    bottomPadding = dip(1)
-                    background = borderBottom(width=dip(1))
-                    menu.add("Search")
-                        .setIcon(R.drawable.magnify)
-                        .setShowAsAction(SHOW_AS_ACTION_ALWAYS)
-                }.lparams(matchParent, wrapContent)
-            }.lparams(matchParent, matchParent)
+
+            frameLayout {
+                verticalLayout {
+                    toolBar = toolbar{
+                        title = "Search"
+                        bottomPadding = dip(1)
+                        background = borderBottom(width=dip(1))
+                        menu.add("Search")
+                            .setIcon(R.drawable.magnify)
+                            .setShowAsAction(SHOW_AS_ACTION_ALWAYS)
+                    }.lparams(matchParent, wrapContent)
+
+                    floatingActionButton {
+                        imageResource = R.drawable.ic_add
+                        onClick {viewModel.openRegistrationActivity()}
+                    }.lparams {
+                        bottomMargin = dip(20)
+                        marginEnd = dip(20)
+                        gravity = Gravity.END or Gravity.BOTTOM
+                    }
+                }.lparams(matchParent, matchParent)
+            }
+
 
 
             navigationView = navigationView {
